@@ -19,11 +19,13 @@ public class DatasourceConfig {
                 .type(HikariDataSource.class)
                 .build();
     }
-
     @Bean
-    public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource){
+    public JdbcTemplate jdbcTemplate
+            (HikariDataSource hikariDataSource){
         return new JdbcTemplate(hikariDataSource);
     }
+
+
 
 
 }
