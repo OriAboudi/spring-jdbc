@@ -1,5 +1,6 @@
 package com.amigoscode.movie;
 
+import com.amigoscode.actor.Actor;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.swing.tree.TreePath;

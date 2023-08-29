@@ -5,8 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Repository
-public class ActorDataAccessService implements ActorDao{
+public class ActorDataAccessService implements ActorDao {
     private final JdbcTemplate jdbcTemplate;
 
     public ActorDataAccessService(JdbcTemplate jdbcTemplate) {
@@ -20,7 +22,8 @@ public class ActorDataAccessService implements ActorDao{
                 FROM jdbc.public.actor
                 LIMIT 100
                 """;
-       return jdbcTemplate.query(sql,new ActorRowMapper());
+        return jdbcTemplate.query(sql, new ActorRowMapper());
+
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ActorDataAccessService implements ActorDao{
                 FROM jdbc.public.actor
                 WHERE id=?
                 """;
-        return jdbcTemplate.query(sql,new ActorRowMapper(),id)
+        return jdbcTemplate.query(sql, new ActorRowMapper(), id)
                 .stream()
                 .findFirst();
     }
@@ -38,9 +41,9 @@ public class ActorDataAccessService implements ActorDao{
     @Override
     public Integer insertActor(Actor actor) {
         var sql = """
-                  INSERT INTO jdbc.public.actor(name)
-                  VALUES (?)
-                  """;
+                INSERT INTO jdbc.public.actor(name)
+                VALUES (?)
+                """;
         return jdbcTemplate.update(
                 sql,
                 actor.name());
@@ -52,7 +55,7 @@ public class ActorDataAccessService implements ActorDao{
                 DELETE FROM jdbc.public.actor
                 WHERE id=?
                 """;
-        return jdbcTemplate.update(sql,id);
+        return jdbcTemplate.update(sql, id);
     }
 
 
@@ -67,10 +70,10 @@ public class ActorDataAccessService implements ActorDao{
     @Override
     public int updateActor(Integer id, Actor actor) {
         var sql = """
-                  UPDATE jdbc.public.actor
-                  SET name = ?
-                  WHERE id = ?
-                  """;
-        return jdbcTemplate.update(sql, actor.name(),id);
+                UPDATE jdbc.public.actor
+                SET name = ?
+                WHERE id = ?
+                """;
+        return jdbcTemplate.update(sql, actor.name(), id);
     }
 }

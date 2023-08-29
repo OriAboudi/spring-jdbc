@@ -21,11 +21,12 @@ public class ActorService {
     }
 
     public Actor getActorById(Integer id) {
-        return actorDao.getActorById(id)
+      return actorDao.getActorById(id)
                 .orElseThrow(() ->
                         new NotFoundException(String.format(
                                 "The Actor with id" + " %s Not Found", id
                         )));
+
     }
 
     public void insertActor(Actor actor) {
