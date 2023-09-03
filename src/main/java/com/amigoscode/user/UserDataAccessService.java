@@ -1,40 +1,34 @@
 package com.amigoscode.user;
 
-import com.amigoscode.movie.MovieRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserDataAccessService implements UserDao {
     private final JdbcTemplate jdbcTemplate;
+
     @Override
-    public Optional<User>  findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         var sql = """
-                SELECT id, firstname,lastname,email,creatat,role
+                SELECT *
                 FROM jdbc.public.users
-                WHERE email = ?;
+                WHERE email=?
                 """;
 
-        return jdbcTemplate.query(sql,(resultSet,i)->{
-            return new User(
-                    resultSet.getString("firstname"),
-                    resultSet.getString("lastname"),
-                    resultSet.getString("email"),
-                    null,
-                    resultSet.getString(Role.USER.name()),
-                    null
-
-            );
-        },email)
-                .stream()
-                .findFirst();
-
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            User u = new User();
+            u.setFirstname(rs.getString("firstname"));
+            u.setLastname(rs.getString("lastname"));
+            u.setPassword(rs.getString("password"));
+            u.setEmail(rs.getString("email"));
+            u.setCrateAt(rs.getString("creatAt"));
+            u.setRoll(rs.getString("role"));
+            return u;
+        }, email));
     }
 }
+

@@ -1,10 +1,12 @@
 package com.amigoscode.jwt;
 
+import com.amigoscode.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @Service
+@Slf4j
 public class JwtService {
     private static final String SECRETE_KEY = "5367566859703373357638792F423F4528482B4D6251655468576D5A71347437";
     public String extractUsername(String token){
@@ -39,18 +42,18 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(User userDetails){
         return generateToken(new HashMap<>(),userDetails);
     }
 
     public String generateToken(
             Map<String, Objects> extraClaims,
-            UserDetails userDetails
+            User userDetails
     ){
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
                 .signWith(getSigninKey(), SignatureAlgorithm.HS256)
@@ -58,6 +61,7 @@ public class JwtService {
     }
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
+
         return (username.equals(userDetails.getUsername())
                 && !isTokenExpired(token));
     }

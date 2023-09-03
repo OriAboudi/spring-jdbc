@@ -1,4 +1,4 @@
-CREATE TABLE movie1
+CREATE TABLE movie
 (
     id           BIGSERIAL PRIMARY KEY,
     name         TEXT NOT NULL,
@@ -6,14 +6,14 @@ CREATE TABLE movie1
     unique (name)
 );
 
-CREATE TABLE user6
+CREATE TABLE users
 (
     id        BIGSERIAL PRIMARY KEY,
     firstname TEXT,
     lastname  TEXT,
     password  TEXT,
     email     TEXT,
-    creatAt   DATE,
+    creatAt   TEXT,
     role      TEXT,
     unique (email)
 );

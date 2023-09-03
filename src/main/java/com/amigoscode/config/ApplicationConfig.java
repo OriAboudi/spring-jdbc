@@ -1,5 +1,6 @@
 package com.amigoscode.config;
 
+import com.amigoscode.authentication.AuthenticationDataAccessService;
 import com.amigoscode.user.UserDataAccessService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

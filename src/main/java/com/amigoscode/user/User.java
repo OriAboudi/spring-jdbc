@@ -1,5 +1,9 @@
 package com.amigoscode.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,15 +12,19 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public record User (String firstname,
-                    String lastname,
-                    String email,
-                    String password,
-                    String role,
-                    Date crateAt
-                   )  implements UserDetails{
+@NoArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+public class User implements UserDetails {
 
 
+    String firstname;
+    String lastname;
+    String password;
+    String email;
+    String crateAt;
+    String roll;
 
 
     @Override
@@ -26,31 +34,34 @@ public record User (String firstname,
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
+
+
+
 }
