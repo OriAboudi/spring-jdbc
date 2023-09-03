@@ -10,19 +10,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class DatasourceConfig {
-
     @Bean
     @Primary
     @ConfigurationProperties("app.datasource.main")
-    public HikariDataSource hikariDataSource() {
+    public HikariDataSource hikariDataSource(){
         return DataSourceBuilder
                 .create()
                 .type(HikariDataSource.class)
                 .build();
     }
-
     @Bean
-    public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource) {
+    public JdbcTemplate jdbcTemplate
+            (HikariDataSource hikariDataSource){
         return new JdbcTemplate(hikariDataSource);
     }
+
+
+
+
 }

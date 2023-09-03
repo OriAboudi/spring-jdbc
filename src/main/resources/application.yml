@@ -2,9 +2,9 @@ app:
   datasource:
     main:
       driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://localhost:5432/amigoscode
-      username: amigoscode
+      jdbc-url: jdbc:postgresql://localhost:5432/jdbc
       password: 'password'
+      username: user
       pool-size: 30
 
 server:
